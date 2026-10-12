@@ -1,0 +1,22 @@
+services:
+  redis:
+    image: redis:8.8
+    container_name: redis
+    restart: always
+    networks:
+      - docker-kit-network
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - ./logs:/logs
+    #配置文件启动
+    command: redis-server /usr/local/etc/redis/redis.conf
+volumes:
+  redis_data:
+    external: true
+
+networks:
+  docker-kit-network:
+    external: true
